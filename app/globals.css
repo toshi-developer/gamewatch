@@ -26,6 +26,16 @@
   --color-muted: var(--muted);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-grunge-bg: #1a1a1a;
+  --color-grunge-border: #3d3d3d;
+  --color-grunge-accent: #8b0000;
+  --color-grunge-orange: #d97706;
+  --color-grunge-text: #d1d5db;
+  --color-grunge-muted: #6b7280;
+  --color-neon-purple: #a855f7;
+  --color-neon-cyan: #06b6d4;
+  --color-neon-blue: #3b82f6;
+  --color-neon-pink: #ec4899;
 }
 
 body {
@@ -33,11 +43,114 @@ body {
   color: var(--foreground);
 }
 
-/* Pulse animation for live indicator */
+/* ─── Animations ─── */
 @keyframes pulse-dot {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.4; }
 }
 .animate-pulse-dot {
   animation: pulse-dot 2s ease-in-out infinite;
+}
+
+/* ─── 7DTD Grunge Theme ─── */
+.theme-sdtd {
+  background-color: #1a1a1a;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%231a1a1a'/%3E%3Crect width='1' height='1' fill='%23222'/%3E%3C/svg%3E");
+  color: #d1d5db;
+}
+
+.grunge-panel {
+  background: rgba(24, 24, 27, 0.8);
+  border: 2px solid #3d3d3d;
+  border-radius: 2px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.grunge-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Crect width='6' height='6' fill='%23000'/%3E%3Crect width='3' height='3' fill='%23111'/%3E%3C/svg%3E");
+}
+
+.grunge-header {
+  background: #27272a;
+  border-bottom: 2px solid #3d3d3d;
+  padding: 0.5rem;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #6b7280;
+}
+
+.grunge-title {
+  font-size: 2.25rem;
+  font-weight: 900;
+  color: #a1a1aa;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.8), 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.blood-moon-bar {
+  height: 1.5rem;
+  background: #09090b;
+  border: 1px solid #27272a;
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+.blood-moon-progress {
+  height: 100%;
+  background: linear-gradient(90deg, #7f1d1d, #dc2626, #7f1d1d);
+  box-shadow: 0 0 15px rgba(220, 38, 38, 0.5);
+  transition: width 1s ease-out;
+}
+
+.rivet {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: #3f3f46;
+  border: 1px solid #18181b;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.custom-scrollbar::-webkit-scrollbar { width: 4px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 2px; }
+
+/* ─── FiveM Neon Theme ─── */
+.theme-fivem {
+  background-color: #0a0a1a;
+  background-image:
+    radial-gradient(circle at 50% 0%, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 100% 100%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
+  background-attachment: fixed;
+  color: #fff;
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+}
+
+.neon-border-purple {
+  border-color: rgba(168, 85, 247, 0.5);
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.2);
+}
+
+.neon-border-cyan {
+  border-color: rgba(6, 182, 212, 0.5);
+  box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
 }
