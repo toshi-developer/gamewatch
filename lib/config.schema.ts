@@ -27,6 +27,8 @@ const serverSchema = z.object({
   tileSource: z.string().optional(),
   /** FiveM: custom resource name for the gamewatch API (default "gamewatch_api") */
   resourceName: z.string().optional(),
+  /** server_name tag in InfluxDB for history charts (defaults to label) */
+  monitorName: z.string().optional(),
 });
 
 export type ServerConfig = z.infer<typeof serverSchema>;
@@ -62,9 +64,19 @@ const SITE_DEFAULT = {
   refreshInterval: 30,
 };
 
+const influxSchema = z
+  .object({
+    url: z.string().url(),
+    token: z.string(),
+    org: z.string(),
+    bucket: z.string(),
+  })
+  .optional();
+
 export const configSchema = z.object({
   site: siteSchema.default(SITE_DEFAULT),
   servers: z.array(serverSchema).min(1),
+  influxdb: influxSchema,
 });
 
 export type GamewatchConfig = z.infer<typeof configSchema>;

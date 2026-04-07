@@ -13,10 +13,13 @@ Open-source game server dashboard — real-time status, player list, world map, 
 - **Player list** — Online/offline players with stats, playtime, last seen
 - **Rankings** — Leaderboards (zombie kills, playtime, etc.)
 - **Mod/resource list** — Display installed mods or FiveM resources
+- **History charts** — Player count and system metrics over time (via InfluxDB / [game-monitor-agent](https://github.com/toshi-developer/game-monitor-agent))
+- **Admin panel** — Token-based admin UI for editing config and viewing system metrics
 - **Auto-refresh** — Configurable polling interval (default 30s)
 - **i18n** — Japanese and English UI
 - **YAML config** — Single config file for all settings, with env var overrides
 - **Docker ready** — One-command deployment with Docker Compose
+- **Built-in help** — `/help` page with setup instructions, supported games, and config reference
 
 ## Quick Start
 
@@ -55,6 +58,9 @@ servers:
 ### 3. Deploy with Docker
 
 ```bash
+# Optional: set admin token for the admin panel
+export GAMEWATCH_ADMIN_TOKEN="your-secret-token"
+
 docker compose up -d
 ```
 
@@ -67,6 +73,34 @@ npm install
 npm run build
 npm start
 ```
+
+## Pages
+
+| Path | Description |
+|------|-------------|
+| `/` | Server list — overview of all configured servers |
+| `/servers/<id>` | Public server dashboard (status, map, players, mods) |
+| `/servers/<id>/admin` | Admin view (system metrics, server config) — requires auth |
+| `/admin` | Admin login |
+| `/admin/settings` | Edit `gamewatch.yaml` from the browser |
+| `/help` | Built-in help page with setup guide and config reference |
+
+## Admin Panel
+
+The admin panel is protected by a token set via the `GAMEWATCH_ADMIN_TOKEN` environment variable.
+
+```bash
+# Docker Compose
+GAMEWATCH_ADMIN_TOKEN=my-secret docker compose up -d
+
+# Or in docker-compose.yml
+environment:
+  - GAMEWATCH_ADMIN_TOKEN=my-secret
+```
+
+Features:
+- **`/admin/settings`** — Edit site config and server entries from the browser (writes to `gamewatch.yaml`)
+- **`/servers/<id>/admin`** — Server admin view with system metrics (CPU, memory) from InfluxDB history
 
 ## Game-Specific Setup
 
@@ -105,6 +139,31 @@ ensure gamewatch_api
 
 Or if using a `[standalone]` folder with `ensure [standalone]`, just place the resource inside it.
 
+## InfluxDB Integration (History Charts)
+
+Gamewatch can display historical player count and system metrics by connecting to an InfluxDB instance populated by [game-monitor-agent](https://github.com/toshi-developer/game-monitor-agent).
+
+Add the `influxdb` section to your config:
+
+```yaml
+influxdb:
+  url: "http://localhost:8086"
+  token: "your-influxdb-token"
+  org: "your-org"
+  bucket: "game_metrics"
+
+servers:
+  - id: "sdtd"
+    game: "sdtd"
+    label: "7DTD Server"
+    apiUrl: "http://localhost:8081"
+    monitorName: "Local-7DTD"   # Must match server_name tag in InfluxDB
+```
+
+The `monitorName` field maps to the `server_name` tag written by game-monitor-agent. If omitted, the server `label` is used.
+
+**Public pages** show player count history. **Admin pages** additionally show CPU and memory usage.
+
 ## Configuration
 
 ### Config File (`gamewatch.yaml`)
@@ -122,6 +181,7 @@ Every config value can be overridden via environment variables:
 | `GAMEWATCH_SITE_REFRESH_INTERVAL` | `site.refreshInterval` |
 | `GAMEWATCH_SERVERS_0_API_URL` | `servers[0].apiUrl` |
 | `GAMEWATCH_SERVERS_0_LABEL` | `servers[0].label` |
+| `GAMEWATCH_ADMIN_TOKEN` | Admin panel authentication token |
 
 ### Legacy Environment Variables
 
@@ -137,25 +197,36 @@ FIVEM_API_URL=http://localhost:30120  # Auto-creates a FiveM server entry
 ```
 gamewatch/
 ├── app/
-│   ├── page.tsx                    # Home: server list
+│   ├── page.tsx                       # Home: server list
+│   ├── help/page.tsx                  # Built-in help page
+│   ├── admin/
+│   │   ├── page.tsx                   # Admin login
+│   │   └── settings/page.tsx          # Config editor UI
 │   └── servers/[serverId]/
-│       └── page.tsx                # Server dashboard (dynamic per game)
+│       ├── page.tsx                   # Public server dashboard
+│       └── admin/page.tsx             # Admin server view (system metrics)
 ├── lib/
-│   ├── config.ts                   # YAML + env var config loader
-│   ├── registry.ts                 # Provider factory
-│   ├── i18n.ts                     # Internationalization
+│   ├── config.ts                      # YAML + env var config loader
+│   ├── config.schema.ts               # Zod validation schema
+│   ├── registry.ts                    # Provider factory
+│   ├── i18n.ts                        # Internationalization (ja/en)
+│   ├── influx.ts                      # InfluxDB query client (history)
+│   ├── admin-auth.ts                  # Token-based admin authentication
 │   └── providers/
-│       ├── types.ts                # GameProvider interface
-│       ├── sdtd/index.ts           # 7 Days to Die provider
-│       ├── fivem/index.ts          # FiveM provider
-│       └── stub.ts                 # Stub for unimplemented games
+│       ├── types.ts                   # GameProvider interface
+│       ├── sdtd/index.ts              # 7 Days to Die provider
+│       ├── fivem/index.ts             # FiveM provider
+│       └── stub.ts                    # Stub for unimplemented games
 ├── components/
-│   ├── shared/                     # Reusable UI components
-│   └── game-specific/              # Game-specific widgets
+│   ├── shared/                        # Reusable UI components
+│   │   ├── history-chart.tsx          # SVG line chart (players / system)
+│   │   ├── game-map/                  # Unified Leaflet map
+│   │   └── ...
+│   └── game-specific/                 # Game-specific widgets
 ├── resources/
-│   └── fivem/gamewatch_api/        # FiveM Lua resource
-├── gamewatch.yaml                  # Your config (git-ignored)
-├── gamewatch.example.yaml          # Example config
+│   └── fivem/gamewatch_api/           # FiveM Lua resource
+├── gamewatch.yaml                     # Your config (git-ignored)
+├── gamewatch.example.yaml             # Example config
 └── docker-compose.yml
 ```
 
@@ -175,6 +246,7 @@ See [`docs/providers.md`](docs/providers.md) for detailed instructions.
 - [Tailwind CSS v4](https://tailwindcss.com/)
 - [Leaflet](https://leafletjs.com/) (world maps)
 - [Zod](https://zod.dev/) (config validation)
+- [@influxdata/influxdb-client](https://github.com/influxdata/influxdb-client-js) (history charts)
 
 ## Contributing
 

@@ -5,7 +5,9 @@ services:
     restart: unless-stopped
     ports:
       - "3001:3000"
+    environment:
+      - GAMEWATCH_ADMIN_TOKEN=${GAMEWATCH_ADMIN_TOKEN:-}
     volumes:
-      - ./gamewatch.yaml:/app/gamewatch.yaml:ro
+      - ./gamewatch.yaml:/app/gamewatch.yaml
     extra_hosts:
       - "host.docker.internal:host-gateway"

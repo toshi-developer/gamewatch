@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getServerConfig } from "@/lib/config";
 import { getProvider } from "@/lib/registry";
@@ -12,6 +13,8 @@ import { ModList } from "@/components/shared/mod-list";
 import { Ranking } from "@/components/shared/ranking";
 import { GameMapWrapper } from "@/components/shared/game-map/map-wrapper";
 import { SdtdExtras } from "@/components/game-specific/sdtd/sdtd-extras";
+import { HistoryChart } from "@/components/shared/history-chart";
+import { isInfluxEnabled } from "@/lib/influx";
 
 export const dynamic = "force-dynamic";
 
@@ -59,6 +62,15 @@ export default async function ServerPage({
 
   return (
     <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-5 px-4 py-8">
+      {/* Nav */}
+      <nav className="flex items-center gap-3 text-sm text-muted">
+        <Link href="/" className="hover:text-accent">
+          {t("home.title")}
+        </Link>
+        <span>/</span>
+        <span className="text-foreground">{serverConfig.label}</span>
+      </nav>
+
       {/* Header */}
       <header className="flex items-start justify-between gap-4">
         <div className="flex flex-col gap-1">
@@ -68,7 +80,15 @@ export default async function ServerPage({
           </h1>
           <p className="text-sm text-muted">{status.serverName}</p>
         </div>
-        <AutoRefresh serverId={serverId} />
+        <div className="flex items-center gap-3">
+          <AutoRefresh serverId={serverId} />
+          <Link
+            href={`/servers/${serverId}/admin`}
+            className="rounded-lg border border-card-border px-3 py-1.5 text-xs text-muted transition-colors hover:border-accent/50 hover:text-accent"
+          >
+            Admin
+          </Link>
+        </div>
       </header>
 
       {/* Status Card */}
@@ -100,6 +120,9 @@ export default async function ServerPage({
       {serverConfig.game === "sdtd" && (
         <SdtdExtras players={players} status={status} />
       )}
+
+      {/* History Chart (from game-monitor-agent / InfluxDB) */}
+      {isInfluxEnabled() && <HistoryChart serverId={serverId} />}
 
       {/* Server Settings */}
       {settings && Object.keys(settings).length > 0 && (

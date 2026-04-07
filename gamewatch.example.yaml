@@ -13,12 +13,21 @@ site:
       label: "Gamewatch"
       url: "https://github.com/toshi-developer/gamewatch"
 
+# Optional: InfluxDB integration for history charts
+# Connect to game-monitor-agent's InfluxDB for player count / system metrics history
+# influxdb:
+#   url: "http://localhost:8086"
+#   token: "my-super-secret-auth-token"
+#   org: "toshi-dev"
+#   bucket: "game_metrics"
+
 servers:
   # 7 Days to Die (Allocs Web API)
   - id: "sdtd-main"
     game: "sdtd"
     label: "7 Days to Die Server"
     apiUrl: "http://localhost:8081"
+    monitorName: "7DTD-Main"  # Optional: matches server_name tag in InfluxDB
     auth:
       tokenName: ""          # Optional: Allocs API token name
       tokenSecret: ""        # Optional: Allocs API token secret

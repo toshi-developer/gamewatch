@@ -23,8 +23,15 @@ export async function GET(
     }
 
     const buf = await upstream.arrayBuffer();
-    const contentType =
+    let contentType =
       upstream.headers.get("content-type") ?? "application/octet-stream";
+
+    // Fix content type when upstream returns generic octet-stream
+    if (contentType === "application/octet-stream") {
+      const pathStr = path.join("/");
+      if (pathStr.endsWith(".webp")) contentType = "image/webp";
+      else contentType = "image/png"; // default for map tiles
+    }
 
     return new NextResponse(buf, {
       headers: {

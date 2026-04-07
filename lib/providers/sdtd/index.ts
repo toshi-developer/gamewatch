@@ -130,7 +130,16 @@ export class SdtdProvider implements GameProvider {
   }
 
   async getMods(): Promise<ModEntry[]> {
-    return this.config.mods ?? [];
+    if (this.config.mods && this.config.mods.length > 0) {
+      return this.config.mods;
+    }
+    // Fallback: try loading from data/mods.json
+    try {
+      const modsData = await import("@/data/mods.json");
+      return modsData.mods ?? [];
+    } catch {
+      return [];
+    }
   }
 
   getMapConfig(): MapConfig {
@@ -210,7 +219,8 @@ export class SdtdProvider implements GameProvider {
   }
 
   async proxyRequest(path: string): Promise<Response> {
-    const res = await fetch(`${this.apiUrl}/map/${path}`, {
+    // Allocs requires .png extension for map tiles
+    const res = await fetch(`${this.apiUrl}/map/${path}.png`, {
       headers: this.headers,
     });
     return res;

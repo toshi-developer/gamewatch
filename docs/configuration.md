@@ -70,6 +70,48 @@ SDTD_API_TOKEN_SECRET=mysecret
 FIVEM_API_URL=http://localhost:30120
 ```
 
+## InfluxDB Integration
+
+Connect to [game-monitor-agent](https://github.com/toshi-developer/game-monitor-agent)'s InfluxDB for history charts:
+
+```yaml
+influxdb:
+  url: "http://localhost:8086"
+  token: "your-influxdb-token"
+  org: "your-org"
+  bucket: "game_metrics"
+```
+
+Each server can specify `monitorName` to match the `server_name` tag in InfluxDB:
+
+```yaml
+servers:
+  - id: "sdtd"
+    game: "sdtd"
+    label: "7DTD Server"
+    monitorName: "Local-7DTD"
+```
+
+If `monitorName` is omitted, the server `label` is used for matching.
+
+**Public pages** display player count history. **Admin pages** additionally show CPU and memory charts.
+
+## Admin Panel
+
+Set `GAMEWATCH_ADMIN_TOKEN` to enable the admin panel:
+
+```bash
+GAMEWATCH_ADMIN_TOKEN=my-secret-token docker compose up -d
+```
+
+| Path | Description |
+|------|-------------|
+| `/admin` | Token login page |
+| `/admin/settings` | Edit `gamewatch.yaml` from the browser |
+| `/servers/<id>/admin` | Per-server admin view with system metrics |
+
+The admin token is checked via a secure HTTP-only cookie (24h session).
+
 ## Docker Compose Example
 
 ```yaml
@@ -78,10 +120,14 @@ services:
     build: .
     ports:
       - "3000:3000"
+    environment:
+      - GAMEWATCH_ADMIN_TOKEN=${GAMEWATCH_ADMIN_TOKEN:-}
     volumes:
-      - ./gamewatch.yaml:/app/gamewatch.yaml:ro
+      - ./gamewatch.yaml:/app/gamewatch.yaml
     extra_hosts:
       - "host.docker.internal:host-gateway"
 ```
 
 Use `host.docker.internal` to reach game servers running on the Docker host.
+
+Note: The config volume is mounted without `:ro` to allow the admin settings editor to write changes.
