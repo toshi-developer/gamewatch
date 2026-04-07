@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0b0f1a;
+  --foreground: #e2e8f0;
+  --card: #111827;
+  --card-border: #1e293b;
+  --accent: #f97316;
+  --accent-dim: #c2410c;
+  --green: #22c55e;
+  --red: #ef4444;
+  --yellow: #eab308;
+  --muted: #64748b;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-border: var(--card-border);
+  --color-accent: var(--accent);
+  --color-accent-dim: var(--accent-dim);
+  --color-green: var(--green);
+  --color-red: var(--red);
+  --color-yellow: var(--yellow);
+  --color-muted: var(--muted);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+/* Pulse animation for live indicator */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.animate-pulse-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}

@@ -1,0 +1,59 @@
+# Gamewatch — Configuration
+# Copy this file to gamewatch.yaml and edit to match your setup.
+# All values can be overridden via environment variables:
+#   GAMEWATCH_SITE_NAME, GAMEWATCH_SERVERS_0_API_URL, etc.
+
+site:
+  name: "My Game Servers"
+  locale: "en"              # "en" | "ja"
+  refreshInterval: 30       # Auto-refresh interval in seconds
+  footer:
+    text: "Powered by"
+    link:
+      label: "Gamewatch"
+      url: "https://github.com/toshi-developer/gamewatch"
+
+servers:
+  # 7 Days to Die (Allocs Web API)
+  - id: "sdtd-main"
+    game: "sdtd"
+    label: "7 Days to Die Server"
+    apiUrl: "http://localhost:8081"
+    auth:
+      tokenName: ""          # Optional: Allocs API token name
+      tokenSecret: ""        # Optional: Allocs API token secret
+    mods:                    # Optional: static mod list
+      - name: "The Anomaly Project"
+        version: "3.5.5"
+        category: "overhaul"
+
+  # FiveM
+  - id: "fivem-rp"
+    game: "fivem"
+    label: "FiveM RP Server"
+    apiUrl: "http://localhost:30120"
+    resourceName: "gamewatch_api"  # FiveM resource name (default: gamewatch_api)
+
+  # Minecraft (coming soon)
+  # - id: "mc-survival"
+  #   game: "minecraft"
+  #   label: "Minecraft Survival"
+  #   apiUrl: "http://localhost:25575"
+
+  # Palworld (coming soon)
+  # - id: "palworld"
+  #   game: "palworld"
+  #   label: "Palworld Server"
+  #   apiUrl: "http://localhost:8212"
+
+  # Rust (coming soon)
+  # - id: "rust"
+  #   game: "rust"
+  #   label: "Rust Server"
+  #   apiUrl: "http://localhost:28016"
+
+  # ARK: Survival Ascended (coming soon)
+  # - id: "ark"
+  #   game: "ark"
+  #   label: "ARK Server"
+  #   apiUrl: "http://localhost:7778"

@@ -1,0 +1,35 @@
+{
+  "name": "gamewatch",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "description": "Open-source game server dashboard — real-time status, players, map, and mods",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/toshi-developer/gamewatch"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "leaflet": "^1.9.4",
+    "next": "16.2.2",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "yaml": "^2.8.3",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/leaflet": "^1.9.21",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.2",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}

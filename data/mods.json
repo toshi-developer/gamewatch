@@ -1,0 +1,208 @@
+{
+  "mods": [
+    {
+      "name": "TFP_CommandExtensions",
+      "category": "core",
+      "version": "2.1.0.0",
+      "description": "サーバコマンド拡張"
+    },
+    {
+      "name": "TFP_MapRendering",
+      "category": "core",
+      "version": "2.1.0.0",
+      "description": "マップレンダラー"
+    },
+    {
+      "name": "TFP_WebServer",
+      "category": "core",
+      "version": "2.5.0.0",
+      "description": "Web ダッシュボード・サーバ API 統合ウェブサーバー"
+    },
+    {
+      "name": "Allocs_CommandExtensions",
+      "category": "core",
+      "version": "29",
+      "description": "サーバ操作用の追加コマンド拡張"
+    },
+    {
+      "name": "Allocs_CommonFunc",
+      "category": "core",
+      "version": "37",
+      "description": "共通関数・サーバ修正"
+    },
+    {
+      "name": "Allocs_WebAndMapRendering",
+      "category": "core",
+      "version": "51",
+      "description": "ゲームマップを画像タイルにレンダリング・Web インターフェース提供"
+    },
+    {
+      "name": "(TMO) Trader Never Closes N More v4.1",
+      "category": "core",
+      "version": "4.1.0",
+      "description": "トレーダーがクローズしません。リストック時間と自動販売機も調整"
+    },
+    {
+      "name": "CraftFromContainersPlus(AnyCrate)",
+      "category": "gameplay",
+      "version": "2.5.2.3",
+      "description": "周囲のコンテナから直接クラフト可能"
+    },
+    {
+      "name": "RoboticInbox",
+      "category": "gameplay",
+      "version": "2.0",
+      "description": "周囲のストレージコンテナに自動的にアイテムをソート・配布する特殊コンテナ"
+    },
+    {
+      "name": "SC Solar Facility",
+      "category": "gameplay",
+      "version": "2.5",
+      "description": "ワークベンチでソーラーパネルのクラフトレシピを追加"
+    },
+    {
+      "name": "StopFuel_Terabitia",
+      "category": "gameplay",
+      "version": "1.1.0",
+      "description": "生産または製錬が完了したら自動的に燃料の燃焼を停止"
+    },
+    {
+      "name": "The Anomaly Project",
+      "category": "gameplay",
+      "version": "3.5.5",
+      "description": "大型オーバーホール MOD（Teragon POIs を含む）"
+    },
+    {
+      "name": "Xample_MarkersMod",
+      "category": "gameplay",
+      "version": "1.1.1.0",
+      "description": "Web マップにカスタムマーカーを配置可能"
+    },
+    {
+      "name": "zzzz_AnomalyProject_JPLocalization",
+      "category": "gameplay",
+      "version": "3.0",
+      "description": "The Anomaly Project の日本語ローカライズ"
+    },
+    {
+      "name": "DeathLocationRespawn",
+      "category": "gameplay",
+      "version": "1.0.0",
+      "description": "死亡地点に空のバックパックを生成し、バックパック付近でリスポーンを可能にする（自作 MOD）"
+    },
+    {
+      "name": "00-WitosVehicleCore",
+      "category": "vehicles",
+      "version": "2.0",
+      "description": "Witos 乗り物 MOD コア基盤"
+    },
+    {
+      "name": "WiitosCargoBob",
+      "category": "vehicles",
+      "version": "2.5",
+      "description": "輸送ヘリコプター"
+    },
+    {
+      "name": "WiitosCrane",
+      "category": "vehicles",
+      "version": "2.5",
+      "description": "乗り物運搬用キャリア"
+    },
+    {
+      "name": "WitosAirplane",
+      "category": "vehicles",
+      "version": "2.5.1",
+      "description": "飛行機"
+    },
+    {
+      "name": "WitosCH-47",
+      "category": "vehicles",
+      "version": "2.5",
+      "description": "CH-47 チヌーク ヘリコプター"
+    },
+    {
+      "name": "WitosCessna",
+      "category": "vehicles",
+      "version": "1.3.1",
+      "description": "セスナ小型飛行機"
+    },
+    {
+      "name": "WitosCorsa",
+      "category": "vehicles",
+      "version": "2.4",
+      "description": "コルサ スポーツカー"
+    },
+    {
+      "name": "WitosFAV",
+      "category": "vehicles",
+      "version": "1.1",
+      "description": "軽武装四輪駆動車"
+    },
+    {
+      "name": "WitosRootMH6",
+      "category": "vehicles",
+      "version": "2.5.2",
+      "description": "MH-6 リトルバード ヘリコプター"
+    },
+    {
+      "name": "WitosRootOsprey",
+      "category": "vehicles",
+      "version": "2.5",
+      "description": "V-22 オスプレイ ティルトローター"
+    },
+    {
+      "name": "Witosfly",
+      "category": "vehicles",
+      "version": "2.0",
+      "description": "ドローン"
+    },
+    {
+      "name": "Witoshoverbike",
+      "category": "vehicles",
+      "version": "2.5",
+      "description": "ホバーバイク"
+    },
+    {
+      "name": "Witoshovercraft",
+      "category": "vehicles",
+      "version": "1.0",
+      "description": "ホバークラフト"
+    },
+    {
+      "name": "Witosjetpack",
+      "category": "vehicles",
+      "version": "2.0",
+      "description": "ジェットパック"
+    },
+    {
+      "name": "Witosmotorcycles",
+      "category": "vehicles",
+      "version": "2.1",
+      "description": "バイク集"
+    },
+    {
+      "name": "zWitosVehicleCamera",
+      "category": "vehicles",
+      "version": "3.6",
+      "description": "Witos 乗り物カメラコントローラー"
+    },
+    {
+      "name": "WitosRootApacheV2",
+      "category": "vehicles",
+      "version": "2.0",
+      "description": "アパッチ攻撃ヘリコプター"
+    },
+    {
+      "name": "WitosBoats2.0",
+      "category": "vehicles",
+      "version": "2.0",
+      "description": "ボート各種"
+    },
+    {
+      "name": "WitosComandoBoat",
+      "category": "vehicles",
+      "version": "1.0",
+      "description": "コマンドボート"
+    }
+  ]
+}
