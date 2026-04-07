@@ -13,7 +13,12 @@ import { ModList } from "@/components/shared/mod-list";
 import { Ranking } from "@/components/shared/ranking";
 import { GameMapWrapper } from "@/components/shared/game-map/map-wrapper";
 import { SdtdExtras } from "@/components/game-specific/sdtd/sdtd-extras";
+import { BloodMoonBar } from "@/components/game-specific/sdtd/blood-moon-bar";
+import { DayNightIndicator } from "@/components/game-specific/sdtd/day-night-indicator";
+import { BlipLegend } from "@/components/game-specific/fivem/blip-legend";
 import { HistoryChart } from "@/components/shared/history-chart";
+import { Announcement } from "@/components/shared/announcement";
+import { SocialLinks } from "@/components/shared/social-links";
 import { isInfluxEnabled } from "@/lib/influx";
 
 export const dynamic = "force-dynamic";
@@ -91,6 +96,16 @@ export default async function ServerPage({
         </div>
       </header>
 
+      {/* Announcement Banner */}
+      {serverConfig.announcement && (
+        <Announcement text={serverConfig.announcement} />
+      )}
+
+      {/* Social Links */}
+      {serverConfig.links && serverConfig.links.length > 0 && (
+        <SocialLinks links={serverConfig.links} />
+      )}
+
       {/* Status Card */}
       <Card title={t("server.status")}>
         <div className="flex flex-wrap gap-6">
@@ -113,12 +128,20 @@ export default async function ServerPage({
         </div>
       </Card>
 
-      {/* Game Events (7DTD blood moon, etc.) */}
-      {events && events.length > 0 && <GameEvents events={events} />}
-
-      {/* Game-specific extras (7DTD kill summary) */}
+      {/* 7DTD: Blood Moon + Day/Night + Kill Stats */}
       {serverConfig.game === "sdtd" && (
-        <SdtdExtras players={players} status={status} />
+        <>
+          <div className="grid gap-5 sm:grid-cols-2">
+            <BloodMoonBar status={status} />
+            <DayNightIndicator status={status} />
+          </div>
+          <SdtdExtras players={players} status={status} />
+        </>
+      )}
+
+      {/* Other game events (fallback for non-7DTD) */}
+      {serverConfig.game !== "sdtd" && events && events.length > 0 && (
+        <GameEvents events={events} />
       )}
 
       {/* History Chart (from game-monitor-agent / InfluxDB) */}
@@ -131,7 +154,10 @@ export default async function ServerPage({
 
       {/* Map */}
       {mapConfig && (
-        <GameMapWrapper serverId={serverId} mapConfig={mapConfig} />
+        <>
+          <GameMapWrapper serverId={serverId} mapConfig={mapConfig} />
+          {serverConfig.game === "fivem" && <BlipLegend />}
+        </>
       )}
 
       {/* Rankings */}

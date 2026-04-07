@@ -16,6 +16,12 @@ const modEntrySchema = z.object({
   url: z.string().optional(),
 });
 
+const socialLinkSchema = z.object({
+  type: z.enum(["discord", "twitter", "youtube", "twitch", "website", "github"]),
+  url: z.string().url(),
+  label: z.string().optional(),
+});
+
 const serverSchema = z.object({
   id: z.string(),
   game: z.enum(["sdtd", "fivem", "minecraft", "palworld", "rust", "ark"]),
@@ -29,6 +35,10 @@ const serverSchema = z.object({
   resourceName: z.string().optional(),
   /** server_name tag in InfluxDB for history charts (defaults to label) */
   monitorName: z.string().optional(),
+  /** Announcement banner text (supports markdown-like bold **text**) */
+  announcement: z.string().optional(),
+  /** Social / community links */
+  links: z.array(socialLinkSchema).optional(),
 });
 
 export type ServerConfig = z.infer<typeof serverSchema>;
